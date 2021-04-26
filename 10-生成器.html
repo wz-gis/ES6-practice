@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //generator函数 function* 可以通过yield关键字，将函数挂起。可以使用next
+
+        function* func() {
+            console.log("1");
+            yield 2;
+            console.log("2");
+            yield 3;
+
+        }
+        //返回一个遍历器对象 可以调用next
+        let fn = func();
+        // console.log(o);
+        console.log(fn.next());
+        console.log(fn.next());
+        console.log(fn.next());
+
+        //总结：generator函数是分段执行的，yield是暂停执行，next是继续执行
+
+        function* add() {
+            console.log("s");
+            //x真的不是yield ‘2’的返回值，它是next()调用 恢复当前yield()执行的传值
+            let x = yield '2';
+            console.log('one' + x);
+            let y = yield '3';
+            console.log('two' + y);
+            return x + y;
+        }
+        const fn2 = add();
+        console.log(fn2.next());
+        console.log(fn2.next(20));
+        console.log(fn2.next(30));
+
+        //使用场景：为不具备迭代器Interator接口的对象体提供了遍历操作
+        const obj = {
+            name: 'wz',
+            age: 23
+        }
+        function* ObjectEntries(obj) {
+            //获取对象的所有key保存到数组[name,age]
+            const propKeys = Object.keys(obj);
+            for (const propKey of propKeys) {
+                yield [propKey, obj[propKey]];
+            }
+        }
+        obj[Symbol.iterator] = ObjectEntries;
+        console.log(obj);
+
+        for (let [key, value] of ObjectEntries(obj)) {
+            console.log(`${key}：${value}`);
+        }
+
+    </script>
+</body>
+
+</html>

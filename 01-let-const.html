@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>let const</title>
+</head>
+
+<body>
+    <script>
+        //var
+        // console.log(a);
+        // var a = 2;
+
+        //1.let声明变量，没有变量提升
+        // console.log(a);
+        // let a = 10;
+
+        //2. let是一个块级作用域
+        // if (true) {
+        //     let b = 10;
+        // }
+        // console.log(b);
+
+        //3. let不能重复声明
+        // let a = 10;
+        // let a = 20;
+        // console.log(a);
+
+        // const 和 let 一样；但是声明常量，做插件用
+
+        //作用1 for循环
+        // var arr = [];
+        // for(let i = 0;i < 10;i++){
+        //     arr[i] = function(){
+        //         return i;
+        //     }
+        // }
+        // console.log(arr[5]());// var 10  let 5 
+
+        // 作用2：不会污染全局变量
+        let RegExp = 10;
+        console.log(RegExp);
+        console.log(window.RegExp);
+
+        //建议：一般使用const 需要修改变量值的时候使用let
+    </script>
+
+</body>
+
+</html>

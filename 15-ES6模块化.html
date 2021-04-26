@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        //es6模块 有 export和import
+        //export 抛出 import导入
+        // 一个模块就是一个独立的文件
+        // import * as f  from './modules/index.js'
+        import obj,{name,age}  from './modules/index.js'
+        import {Animal}  from './modules/index.js'
+        console.log(name);
+        console.log(age);
+        console.log(obj);
+        let a = new Animal('wz',23);
+        console.log(a);
+    </script>
+</body>
+</html>

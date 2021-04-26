@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <script>
+        //数组的方法 from() of()
+        //from()将伪数组转换为数组
+        function add(a, b) {
+            console.log(arguments);
+            //es5转换
+            // let arr = [].slice.call(arguments);
+            //es6转换
+            //from转换
+            let arr = Array.from(arguments);
+            console.log(arr);
+            //1. 扩展运算符转换伪数组
+            console.log([...arguments]);
+        }
+        add(1, 2);
+        //2. from 1伪数组 2对伪数组进行处理
+        let lis = document.getElementsByTagName('li');
+        console.log(Array.from(lis, ele => ele.textContent));
+
+        //3. of 将任意数据类型，转换的到数组中
+        let arr2 = Array.of(2, 3, 4, 5, [1, 3, 4], { id: 2 });
+        console.log(arr2);
+
+        //4. find 找出第一个符合条件的数组成员
+        console.log(arr2.find(n => n > 3));
+        console.log(arr2.findIndex(n => n > 3));
+
+        //5. 遍历器
+        // entries() keys() values() 返回一个键，值，键值对遍历器，可以用for of 循环进行遍历
+        for(let index of ['a','b'].keys()){
+            console.log((index));
+        }
+        for(let value of ['a','b'].values()){
+            console.log((value));
+        }
+        for(let [index,value] of ['a','b'].entries()){
+            console.log((index));
+        }
+        for(let [index,value] of ['a','b'].entries()){
+            console.log((value));
+        }
+
+        //6. includes()判断数组是否包含给定值
+        console.log([1,3,4].includes(5));//false
+
+    </script>
+</body>
+
+</html>

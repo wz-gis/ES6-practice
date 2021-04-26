@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //es5造类
+        /*
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        Person.prototype.sayName = function () {
+            return this.name;
+        }
+        let p1 = new Person('wz', 23);
+        console.log(p1.sayName());
+        */
+        //es6造类
+        class Person {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            // sayName(){
+            //     return this.name;
+            // }
+            // sayAge(){
+            //     return this.age;
+            // }
+        }
+        //通过Object.assign()方法来一次性向类中添加多个方法
+        Object.assign(Person.prototype, {
+            sayName() {
+                return this.name;
+            },
+            sayAge() {
+                return this.age;
+            }
+        });
+        let p1 = new Person('wz', 23);
+        console.log(p1);
+
+        //类的继承 和java差不多
+        class Animal {
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            sayName() {
+                return this.name;
+            }
+            sayAge() {
+                return this.age;
+            }
+        }
+
+        //子类
+        class Dog extends Animal {
+            constructor(name, age, color) {
+                super(name, age);//animal.call(this,name,age)
+                this.color = color;
+            }
+            sayColor() {
+                return this.color;
+            }
+        }
+        let d = new Dog('ww', 2, "blue");
+        console.log(d);
+    </script>
+</body>
+
+</html>

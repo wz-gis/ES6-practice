@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async</title>
+    <script src="http://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <script>
+        //async 是异步操作更加方便
+        //await 等待异步操作完成后才执行下面操作
+        //基本操作，async可以返回一个promise对象
+        //async 是generator的一个语法糖 await async 必须一起使用
+        //await后面的东西是一个promise对象 只要一个await是reject就不会往下执行 解决办法：try catch
+        //generetor promise async 1. 解决回调地狱 2. 方便异步调用
+        async function f() {
+            let a = await 'hello async';
+            return a + "1111";
+        }
+        let b;
+        f().then(v => { b = v; }).catch(e => { console.log(e); });
+        setTimeout(() => {
+            console.log(b);
+        }, 0);
+
+        function getJSON(url) {
+            return new Promise((resolved, rejected) => {
+                $.ajax({
+                    url,
+                    method: 'get',
+                    success(res) {
+                        resolved(res);
+                    }
+                })
+            })
+        }
+        async function getMyData(url) {
+            let res = await getJSON(url);
+            console.log(res);
+            let arr = await res.showapi_res_id;
+            return arr;
+
+        }
+        getMyData('http://route.showapi.com/238-2?showapi_appid%3Dmyappid%26lng%3D123.32298703399%26lat%3D39.983424051248%26from%3D5%26showapi_sign%3Dmysecret')
+            .then(data => console.log(data));
+
+    </script>
+
+</body>
+
+</html>

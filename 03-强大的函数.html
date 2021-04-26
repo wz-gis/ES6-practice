@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>强大的函数</title>
+</head>
+
+<body>
+    <script>
+        // 1.带参数默认值的函数
+
+        // es5
+        // function add(a, b) {
+        //     a = a || 10;
+        //     b = b || 10;
+        //     return a + b;
+        // }
+        // console.log(add(60));
+
+        // es6
+        // function add(a, b = 10) {
+        //     return a + b;
+        // }
+        // console.log(add(20));
+
+        // 2. 默认的表达式也可以是一个函数
+        // function add(a, b = getVal(5)) {
+        //     return a + b;
+        // }
+        // function getVal(val){
+        //     return val + 5;
+        // }
+        // console.log(add(10));
+
+        //es5 剩余参数方法
+        // function pick(obj){
+        //     let result = Object.create(null);
+        //     for(let i = 1;i<arguments.length;i++){
+        //         result[arguments[i]] = obj[arguments[i]];
+        //     }
+        //     return result;
+        // }
+        // let book = {
+        //     title : "es6",
+        //     author: "峥宝",
+        //     year : 2021
+        // }
+        // let bookData = pick(book,'title','author','year');
+        // console.log(bookData);
+
+        // 3. es6 剩余参数：三个点...和一个紧跟着的具名参数指定...keys
+
+        /*         function pick(obj, ...keys) {
+                    let result = Object.create(null);
+                    // console.log(keys);
+                    //解决了剩余参数 arguments复杂不方便的问题
+                    for (let i = 0; i < keys.length; i++) {
+                        result[keys[i]] = obj[keys[i]];
+                    }
+                    return result;
+                }
+                let book = {
+                    title: "es6",
+                    author: "峥宝",
+                    year: 2021
+                }
+                let bookData = pick(book, 'title', 'author', 'year');
+                console.log(bookData); 
+        */
+
+
+        //4. es6扩展运算符
+        //剩余运算符：把多个独立的合并到一个数组中
+        //扩展运算符：把一个数组分割，并将各个项作为分离的参数传给函数
+        // const arr = [1, 20, 50, 64, 15, 89, 95, 100];
+        // console.log(Math.max.apply(null,arr));        //es5
+        // console.log(Math.max(...arr));        //es6
+
+        //5.箭头函数
+        // 使用=>来定义function(){} 等价于 ()=>{}
+        /*         let add = (a, b) => a + b;
+                let add2 = (a, b = 10) => a + b;
+                let getJson = () =>({
+                    name:"wz",
+                    id: 1 
+                });
+                let fn = (()=>{
+                    var name = "hellof";//局部变量
+                    return ()=> name;
+                })();
+        
+                console.log(getJson());
+                console.log(fn());//可以闭包输出局部变量
+                console.log(name);//无法输出局部变量 */
+
+        //没有this绑定
+        //es5中的this指向：取决于调用该函数的上下文对象
+        /*
+         let PageHandle = {
+            id: 123,
+            init: function () {
+                //this.doSomething is not a function
+                //箭头函数自己没有作用域链，只能通过查找上层对象的作用域链，一旦使用箭头函数，就找上层对象
+                document.addEventListener('click', () => {
+                    this.doSomething(event.type);
+                }, false);
+            },
+            doSomething: function (type) {
+                console.log(`当前id:${this.id}`);
+            }
+        }
+        PageHandle.init(); 
+        */
+        
+
+        //箭头函数注意事项
+        //1.使用箭头函数，内部没有arguments,没有作用域链，指向document对象
+/*         let getVal = (a, b) => {
+            //arguments is not defined
+            console.log(arguments);
+        }
+        console.log(getVal(5, 10)); */
+
+        //2. 箭头函数不能使用new关键字,没有constructor属性
+        // let Person = ()=>{console.log(1);};
+        let Person = function(){console.log(1);};
+        let p = new Person();//Person is not a constructor
+        console.log(p);
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+    <script src="http://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <script>
+        //promise 承诺
+        //相当于一个容器，保存着未来还未结束的事件（异步操作）
+        //各种异步操作都可以用同样的方法进行处理
+        //特点
+        //1. 对象的状态不受外界影响  异步操作三个状态  pending(进行) resolved(成功) rejected(失败)
+        //2. 一旦状态改变，就不会逆转，任何时候都可以得到这个结果
+        
+        function timeOut(ms) {
+            return new Promise((resolved, rejected) => {
+                setTimeout(() => {
+                    resolved("hello promise success");
+                }, ms);
+            })
+        }
+        timeOut(2000).then((val) => {
+            console.log(val);
+        })
+
+        //具体应用
+        function getJSON(url) {
+            return new Promise((resolved, rejected) => {
+                $.ajax({
+                    url,
+                    method: 'get',
+                    success(res) {
+                        resolved(res.showapi_res_id);
+                    }
+                })
+            })
+
+        }
+        getJSON('http://route.showapi.com/238-2?showapi_appid%3Dmyappid%26lng%3D123.32298703399%26lat%3D39.983424051248%26from%3D5%26showapi_sign%3Dmysecret')
+            .then((data) => {
+                console.log(data);
+                
+            }, (error) => {
+                console.log(error);
+            });
+
+        //resolve() reject() all() race() done() finally()
+
+        //resolve可以将任何对象转换为promise对象
+        //    let p =  Promise.resolve('foo');
+        /*
+        let p = new Promise(resolved => resolved('foo'));//等价
+        console.log(p);
+        p.then((data) => {
+            console.log(data);
+        })
+        */
+
+        //异步并行 应用于游戏加载资源，前端的静态文件
+        /*
+        let p1 = new Promise(resolved => resolved('foo'));
+        let p2 = new Promise(resolved => resolved('ddd'));
+        let p3 = new Promise(resolved => resolved('sss'));
+        let p4 = Promise.all([p1,p2,p3]);
+        p4.then((data) => {
+            console.log(data);
+        }).catch(err => {
+            console.log('ee');
+
+        })
+        */
+
+        //race()请求超时操作
+        /*
+        function loadImg(imgSrc) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.src = imgSrc;
+                img.onload = function () {
+                    resolve(img);
+                }
+            })
+        }
+        function timeout() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    reject(new Error('图片请求超时'));
+                }, 3000);
+            })
+        }
+        Promise.race([loadImg('https://tse4-mm.cn.bing.net/th/id/OIP.ZTmNathhKflijArYDaQEDAHaEo?w=249&h=180&c=7&o=5&dpr=2&pid=1.7'), timeout()]).then(data => {
+            console.log(data);
+            document.body.appendChild(data);
+        })
+        */
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成器应用</title>
+    <script src="http://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <script>
+        //避免回调地狱      
+         function* main(){
+             let res = yield request('http://route.showapi.com/238-2?showapi_appid%3Dmyappid%26lng%3D116.32298703399%26lat%3D39.983424051248%26from%3D5%26showapi_sign%3Dmysecret');
+             console.log(res);
+             //进行下一步操作
+             console.log("数据1请求完成");
+             let res2 = yield request('http://route.showapi.com/238-2?showapi_appid%3Dmyappid%26lng%3D123.32298703399%26lat%3D39.983424051248%26from%3D5%26showapi_sign%3Dmysecret');
+             console.log(res2);
+             console.log("数据2请求完成");
+         }
+         const ite = main();
+         ite.next();
+ 
+         function request(url){
+             $.ajax({
+                 url,
+                 method:'get',
+                 success(res){
+                     ite.next(res);
+                 }
+             })
+         }
+         
+
+        //数据加载 异步变同步
+        function loadUI() {
+            console.log("开始loading");
+        }
+        function loadData() {
+            setTimeout(() => {
+                console.log("数据加载完成");
+                fn.next();
+            }, 1000);
+
+        }
+        function loadSuccess() {
+            console.log("隐藏loading");
+        }
+
+        function* main() {
+            loadUI();
+            yield loadData();
+            loadSuccess();
+        }
+        const fn = main();
+        fn.next();
+    </script>
+</body>
+
+</html>
